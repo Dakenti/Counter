@@ -22,10 +22,13 @@ public struct CounterView: View {
 
 extension CounterView {
   private var content: some View {
-    VStack {
-      counterText
-        .padding(.bottom, 8)
-      buttons
+    ZStack {
+      ActivityRingView(progress: viewModel.circleFillPercentage)
+      VStack {
+        counterText
+          .padding(.bottom, 4)
+        buttons
+      }
     }
   }
   

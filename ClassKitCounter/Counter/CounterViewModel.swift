@@ -13,6 +13,10 @@ final public class ContentViewModel: ObservableObject {
   @Published
   private(set) var count: Int = 0
   
+  public var circleFillPercentage: Double {
+    Double(count) / 24
+  }
+  
   public func increment() {
     count += 1
   }
