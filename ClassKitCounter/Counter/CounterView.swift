@@ -42,7 +42,21 @@ extension CounterView {
   private var buttons: some View {
     HStack(alignment: .center, spacing: 16) {
       resetButton
+        .sensoryFeedback(
+          .impact(
+            weight: .heavy,
+            intensity: 1
+          ),
+          trigger: viewModel.count
+        )
       incrementButton
+        .sensoryFeedback(
+          .impact(
+            flexibility: .soft,
+            intensity: 0.5
+          ),
+          trigger: viewModel.count
+        )
     }
   }
   
