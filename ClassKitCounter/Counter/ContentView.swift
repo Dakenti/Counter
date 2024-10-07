@@ -10,8 +10,8 @@ import SwiftUI
 // MARK: - CounterView
 
 public struct CounterView: View {
-  @State
-  private var count = 0
+  @ObservedObject
+  private var viewModel = ContentViewModel()
   
   public var body: some View {
     content
@@ -24,14 +24,16 @@ extension CounterView {
   private var content: some View {
     VStack {
       counterText
+        .padding(.bottom, 8)
       buttons
     }
   }
   
   private var counterText: some View {
-    Text("\(count)")
-      .font(.system(size: 80))
-      .foregroundStyle(.gray)
+    RollingNumberText(font: .system(size: 80),
+                      weight: .light,
+                      value: viewModel.count,
+                      textColor: .gray)
   }
   
   private var buttons: some View {
@@ -43,7 +45,7 @@ extension CounterView {
   
   private var resetButton: some View {
     Button(action: {
-      count = 0
+      viewModel.reset()
     }) {
       Text(Localization.resetButtonTitle.rawValue)
         .font(.title)
@@ -53,7 +55,7 @@ extension CounterView {
   
   private var incrementButton: some View {
     Button(action: {
-      count += 1
+      viewModel.increment()
     }) {
       Image(systemName: "plus.circle")
         .font(.largeTitle)
