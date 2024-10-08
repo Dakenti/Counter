@@ -23,7 +23,7 @@ public struct CounterView: View {
 extension CounterView {
   private var content: some View {
     ZStack {
-      ActivityRingView(progress: viewModel.circleFillPercentage)
+      CircleView(progress: viewModel.circleFillPercentage)
       VStack {
         counterText
           .padding(.bottom, 4)
@@ -42,21 +42,7 @@ extension CounterView {
   private var buttons: some View {
     HStack(alignment: .center, spacing: 16) {
       resetButton
-        .sensoryFeedback(
-          .impact(
-            weight: .heavy,
-            intensity: 1
-          ),
-          trigger: viewModel.count
-        )
       incrementButton
-        .sensoryFeedback(
-          .impact(
-            flexibility: .soft,
-            intensity: 0.5
-          ),
-          trigger: viewModel.count
-        )
     }
   }
   
@@ -68,6 +54,13 @@ extension CounterView {
         .font(.title)
         .foregroundStyle(.gray)
     }
+    .sensoryFeedback(
+      .impact(
+        weight: .heavy,
+        intensity: 1
+      ),
+      trigger: viewModel.count
+    )
   }
   
   private var incrementButton: some View {
@@ -77,6 +70,13 @@ extension CounterView {
       Image(systemName: "plus.circle")
         .font(.largeTitle)
     }
+    .sensoryFeedback(
+      .impact(
+        flexibility: .soft,
+        intensity: 0.5
+      ),
+      trigger: viewModel.count
+    )
   }
 }
 

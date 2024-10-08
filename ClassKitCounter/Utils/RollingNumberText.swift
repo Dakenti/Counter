@@ -35,28 +35,9 @@ public struct RollingNumberText: View {
   public var body: some View {
     HStack(spacing: 0) {
       ForEach(animationRange.indices, id: \.self) { index in
-        Text("0")
-          .font(font)
-          .fontWeight(weight)
-          .opacity(0)
+        rollingText
           .overlay {
-            GeometryReader { proxy in
-              let size = proxy.size
-              
-              VStack(spacing: 0) {
-                ForEach(0...9, id: \.self) { number in
-                  Text("\(number)")
-                    .font(font)
-                    .fontWeight(weight)
-                    .frame(width: size.width,
-                           height: size.height,
-                           alignment: .center)
-                    .foregroundColor(textColor)
-                }
-              }
-              .offset(y: settingOffset(at: index, height: size.height))
-            }
-            .clipped()
+            calculateTextOverlay(at: index)
           }
       }
     }
@@ -73,6 +54,37 @@ public struct RollingNumberText: View {
         settingAnimationRange(stringValue, isAnimate: true)
       }
     }
+  }
+}
+
+// MARK: - Content
+
+extension RollingNumberText {
+  private var rollingText: some View {
+    Text("0")
+      .font(font)
+      .fontWeight(weight)
+      .opacity(0)
+  }
+  
+  private func calculateTextOverlay(at index: Int) -> some View {
+    GeometryReader { proxy in
+      let size = proxy.size
+      
+      VStack(spacing: 0) {
+        ForEach(0...9, id: \.self) { number in
+          Text("\(number)")
+            .font(font)
+            .fontWeight(weight)
+            .frame(width: size.width,
+                   height: size.height,
+                   alignment: .center)
+            .foregroundColor(textColor)
+        }
+      }
+      .offset(y: settingOffset(at: index, height: size.height))
+    }
+    .clipped()
   }
 }
 
